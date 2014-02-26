@@ -1,6 +1,9 @@
 # Auphonic
 
-TODO: Write a gem description
+A ruby wrapper and CLI for the Auphonic API.
+
+* https://auphonic.com/api-docs/
+
 
 ## Installation
 
@@ -16,23 +19,47 @@ Or install it yourself as:
 
     $ gem install auphonic
 
-## Usage
 
-### Create a production
+## Setup
 
-    auphonic create <preset>
+Create a file with your credentials
 
-#### With Chapter Marks
+    echo "login: yourlogin\npasswd: secret" > ~/.auphonic
 
-#### With Detailed Audio Metadata
 
-### Upload a file
+## Usage (as CLI)
 
-    auphonic addfile <uuid> <url>
-    
-### Start a production
+### create, upload, start, wait, download
 
-    auphonic start <uuid>
+Creates a production based on the first (!) preset it will find,
+uploads the file to it, starts the production, waits for the processing
+to finish, and downloads all output files.
+
+    auphonic process <audiofile>
+
+
+## Usage (as library)
+
+### Query data
+
+    Auphonic::Preset.all
+    Auphonic::Production.all
+    Auphonic::Service.all
+    Auphonic::Info::ServiceType.all
+    Auphonic::Info::Algorithm.all
+    Auphonic::Info::OutputFile.all
+    Auphonic::Info::ProductionStatus.all
+
+### Example
+
+    preset = Preset.all.first
+    production = preset.new_production
+    production.save
+    production.upload 'somefile.wav'
+    production.start
+    sleep 10 while production.reload.data['status_string'] != 'Done'
+    production.download
+
 
 ## Contributing
 

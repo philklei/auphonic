@@ -18,7 +18,21 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Create a production
+
+    auphonic create <preset>
+
+#### With Chapter Marks
+
+#### With Detailed Audio Metadata
+
+### Upload a file
+
+    auphonic addfile <uuid> <url>
+    
+### Start a production
+
+    auphonic start <uuid>
 
 ## Contributing
 

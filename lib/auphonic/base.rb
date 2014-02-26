@@ -8,6 +8,10 @@ module Auphonic
         Endpoint.instance.send(method).map { |data| new(data) }
       end
     end
+
+    def uuid
+      data['uuid']
+    end
     
   end
 end

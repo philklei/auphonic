@@ -13,9 +13,9 @@ module Auphonic
 
     def initialize
       @connection ||= Faraday.new(:url => URL) do |faraday|
-        faraday.request  :url_encoded             # form-encode POST params
-        faraday.response :logger                  # log requests to STDOUT
-        faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
+        faraday.request :multipart
+        #faraday.response :logger
+        faraday.adapter Faraday.default_adapter
       end
       config = OpenStruct.new(YAML.load(File.read(File.expand_path("~/.auphonic"))))
       credentials = [ config.login, config.passwd ]
@@ -50,10 +50,63 @@ module Auphonic
       get('/api/info/production_status.json')['data']
     end
 
+    def load_production(uuid)
+      get("/api/production/#{uuid}.json")['data']
+    end
+
+    def create_production(data)
+      url = '/api/productions.json'
+      response = @connection.post do |req|
+        req.url url
+        req.headers['Content-Type'] = 'application/json'
+        req.body = data.to_json
+      end
+      JSON.parse(response.body)['data']
+    end
+
+    def upload_to_production(uuid, path)
+      raise 'Error: uuid missing' if uuid.nil?
+      url = "/api/production/#{uuid}/upload.json"
+      payload = { input_file: Faraday::UploadIO.new(path, 'audio/basic') }
+      response = @connection.post(url, payload)
+      JSON.parse(response.body)['data']
+    end
+
+    def start_production(uuid)
+      url = "/api/production/#{uuid}/start.json"
+      response = @connection.post do |req|
+        req.url url
+        req.headers['Content-Type'] = 'application/json'
+      end
+      JSON.parse(response.body)['data']
+    end
+
+    def download(url)
+      url.sub!(URL, '')
+      filename = File.basename(url)
+      response = @connection.get(url)
+      File.open(filename, 'w') { |f| f.print(response.body) }
+      filename
+    end
+
+    # def post(url, &bloc)
+    #   puts '=' * 80
+    #   puts "POST #{url}"
+    #   puts '=' * 80
+    #   response = @connection.post url, bloc
+    #   result = JSON.parse(response.body)
+    #   return result['data'] if result['status_code'] == 200
+    #   # error
+    #   result['data'] = nil
+    #   pp result
+    #   exit
+    # end
+
     private
 
     def get(url)
-      JSON.parse(@connection.get(url).body)
+      response = @connection.get(url)
+      JSON.parse(response.body)
     end
 
   end

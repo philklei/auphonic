@@ -39,6 +39,21 @@ to finish, and downloads all output files.
 
     auphonic process <audiofile>
 
+The result might look like this...
+
+    % auphonic process t42-u355-1393431156.flv 
+    create new production
+    upload t42-u355-1393431156.flv
+    start production
+    Status: Waiting
+    Status: Audio Processing
+    Status: Waiting
+    Status: Audio Encoding
+    Status: Done
+    download output files
+    t42-u355-1393431156.mp3
+    t42-u355-1393431156.ogg
+
 
 ## Usage (as library)
 

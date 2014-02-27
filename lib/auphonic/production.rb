@@ -27,5 +27,9 @@ module Auphonic
       end
     end
 
+    def status
+      data['status_string']
+    end
+
   end
 end

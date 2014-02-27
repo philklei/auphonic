@@ -1,5 +1,3 @@
-require 'pp'
-
 module Auphonic
   class Exec < Struct.new(:args)
     class << self
@@ -8,11 +6,9 @@ module Auphonic
       end
     end
 
-    ENDPOINT = 'https://auphonic.com'
-
     def run
-      raise 'No.' unless args[0] != 'process'
-      file = args[1]
+      usage if args[0] != 'process'
+      file = args[1] || usage
       puts 'create new production'
       p1 = Preset.all.first.new_production.save
       puts "upload #{file}"
@@ -20,13 +16,20 @@ module Auphonic
       puts 'start production'
       p1.start
       status = nil
-      while status != 'Done'
+      until status == 'Done'
         sleep 5
         status = p1.reload.data['status_string']
         puts "Status: #{status}"
       end
       puts 'download output files'
-      p1.download
+      puts *p1.download
+    end
+
+    def usage
+      puts
+      puts 'Usage: auphonic process <file>'
+      puts
+      exit
     end
 
     # def parse_args

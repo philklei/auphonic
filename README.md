@@ -1,8 +1,10 @@
-# Auphonic
+# Auphonic (Ruby Gem)
 
 A ruby wrapper and CLI for the Auphonic API.
 
 * https://auphonic.com/api-docs/
+
+Happily engineered while working on [VoiceRepublic](http://voicerepublic.com).
 
 
 ## Installation
@@ -50,6 +52,9 @@ to finish, and downloads all output files.
     Auphonic::Info::OutputFile.all
     Auphonic::Info::ProductionStatus.all
 
+These queries returns arrays of data entities. All data entities have
+an accessor data which holds the hash returned by the API.
+
 ### Example
 
     preset = Preset.all.first
@@ -57,7 +62,7 @@ to finish, and downloads all output files.
     production.save
     production.upload 'somefile.wav'
     production.start
-    sleep 10 while production.reload.data['status_string'] != 'Done'
+    sleep 10 until production.reload.status == 'Done'
     production.download
 
 

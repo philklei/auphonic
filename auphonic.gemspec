@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Auphonic::VERSION
   spec.authors       = ["Phil Hofmann"]
   spec.email         = ["phil@branch14.org"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.description   = %q{A ruby wrapper and CLI for the Auphonic API.}
+  spec.summary       = %q{A ruby wrapper and CLI for the Auphonic API.}
+  spec.homepage      = "https://github.com/branch14/auphonic"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -21,6 +21,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "faraday"
 
   spec.add_development_dependency "bundler", "~> 1.3"
-  spec.add_development_dependency "thor"
-  spec.add_development_dependency "rspec"
+  # spec.add_development_dependency "thor"
+  # spec.add_development_dependency "rspec"
 end

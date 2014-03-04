@@ -67,8 +67,8 @@ The result might look like this...
     Auphonic::Info::OutputFile.all
     Auphonic::Info::ProductionStatus.all
 
-These queries returns arrays of data entities. All data entities have
-an accessor data which holds the hash returned by the API.
+These queries return arrays of data entities. All data entities have
+an accessor `data` which holds the hash returned by the API.
 
 ### Example
 

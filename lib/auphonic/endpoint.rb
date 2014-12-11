@@ -17,8 +17,8 @@ module Auphonic
         #faraday.response :logger
         faraday.adapter Faraday.default_adapter
       end
-      config = OpenStruct.new(YAML.load(File.read(File.expand_path("~/.auphonic"))))
-      credentials = [ config.login, config.passwd ]
+      config = OpenStruct.new(YAML.load("auphonic.yml"))
+      credentials = [ config["login"], config["password"] ]
       @connection.basic_auth(*credentials)
     end
 

@@ -17,7 +17,7 @@ module Auphonic
         #faraday.response :logger
         faraday.adapter Faraday.default_adapter
       end
-      config = YAML.load("auphonic.yml")
+      config = YAML.load(File.read("config/auphonic.yml"))
       credentials = [ config["login"], config["password"] ]
       @connection.basic_auth(*credentials)
     end

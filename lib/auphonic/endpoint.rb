@@ -17,8 +17,8 @@ module Auphonic
         #faraday.response :logger
         faraday.adapter Faraday.default_adapter
       end
-      config = YAML.load(File.read("config/auphonic.yml"))
-      credentials = [ config["login"], config["password"] ]
+      config = YAML.load(ERB.new(File.read("#{Rails.root}/config/auphonic.yml")).result)[Rails.env].symbolize_keys!
+      credentials = [ config[:login], config[:password] ]
       @connection.basic_auth(*credentials)
     end
 
@@ -87,6 +87,12 @@ module Auphonic
       response = @connection.get(url)
       File.open(filename, 'w') { |f| f.print(response.body) }
       filename
+    end
+    
+    def download_url(url)
+      url.sub!(URL, '')
+      response = @connection.get(url)
+      response
     end
 
     # def post(url, &bloc)

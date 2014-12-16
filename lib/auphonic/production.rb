@@ -27,6 +27,10 @@ module Auphonic
       end
     end
 
+    def download_url(url)
+      Endpoint.instance.download_url(url)
+    end
+    
     def status
       data['status_string']
     end

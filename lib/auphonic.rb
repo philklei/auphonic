@@ -8,6 +8,7 @@ require "auphonic/production"
 require "auphonic/preset"
 require "auphonic/service"
 require "auphonic/info"
+require "auphonic/user"
 
 module Auphonic
 end

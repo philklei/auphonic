@@ -53,6 +53,10 @@ module Auphonic
     def load_production(uuid)
       get("/api/production/#{uuid}.json")['data']
     end
+    
+    def user_info
+      get("api/user.json")["data"]
+    end
 
     def create_production(data)
       url = '/api/productions.json'

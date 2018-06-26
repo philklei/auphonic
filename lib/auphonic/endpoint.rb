@@ -65,9 +65,10 @@ module Auphonic
         req.headers['Content-Type'] = 'application/json'
         req.body = data.to_json
       end
+      debugger
       JSON.parse(response.body)['data']
     end
-
+    
     def upload_to_production(uuid, path)
       raise 'Error: uuid missing' if uuid.nil?
       url = "/api/production/#{uuid}/upload.json"
